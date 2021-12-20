@@ -38,6 +38,18 @@ def fetchWorkable(query: str):
     return workable_jobs
 
 
+@app.get("/telegram/login")
+def fetchWorkable(query: str, phone: str):
+    workable_jobs = workableJ.getJobs(query)
+    return workable_jobs
+
+
+@app.get("/telegram")
+def fetchWorkable(query: str, phone: str):
+    workable_jobs = workableJ.getJobs(query)
+    return workable_jobs
+
+
 wuzzuf_jobs = wuzzufJ.getJobs("front end development")
 workable_jobs = workableJ.getJobs("front end development")
 
