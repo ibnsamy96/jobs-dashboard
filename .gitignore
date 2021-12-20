@@ -1,2 +1,4 @@
 *.xd
+.vscode
 *.pyc
+.env
