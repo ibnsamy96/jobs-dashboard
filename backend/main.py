@@ -10,7 +10,7 @@ app = FastAPI()
 
 @app.get("/")
 def home():
-    return {"message": "Welcome home son!"}
+    return {"message": "Welcome home, son!"}
 
 
 @app.get("/all-jobs")
@@ -50,8 +50,8 @@ def fetchWorkable(query: str, phone: str):
     return workable_jobs
 
 
-wuzzuf_jobs = wuzzufJ.getJobs("front end development")
-workable_jobs = workableJ.getJobs("front end development")
+# wuzzuf_jobs = wuzzufJ.getJobs("front end development")
+# workable_jobs = workableJ.getJobs("front end development")
 
 # print(wuzzuf_jobs)
 # print(workable_jobs)
