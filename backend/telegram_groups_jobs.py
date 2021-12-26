@@ -6,8 +6,12 @@ Short name: jobsdashboard2021
 
 """
 
-
 import asyncio
+import nest_asyncio
+
+nest_asyncio.apply()
+
+
 from telethon import TelegramClient
 from telethon.sessions import StringSession
 from telethon.tl.types import User
@@ -101,26 +105,27 @@ async def main(user: User or SentCode, client: TelegramClient):
     # await client.send_file("me", "./E2vsrCfVoAIWC9L.png")
 
     # You can print the message history of any chat:
-    async for message in client.iter_messages("Front End Vacancies"):
-        print(message.stringify())
+    # async for message in client.iter_messages("Front End Vacancies"):
+    #     print(message.stringify())
+    #     break
 
-        # You can download media from messages, too!
-        # The method will return the path where the file was saved.
-        # if message.photo:
-        # path = await message.download_media()
-        # print("File saved to", path)  # printed after download is done
-        break
+    # You can download media from messages, too!
+    # The method will return the path where the file was saved.
+    # if message.photo:
+    # path = await message.download_media()
+    # print("File saved to", path)  # printed after download is done
 
 
 # with client:
 
 
-def init(phone_number):
-    # user, client = asyncio.get_event_loop().run_until_complete(auth(phone_number))
+def init(phone_number: str, code: str or None = None, password: str or None = None):
+    # user, client = asyncio.get_event_loop().run_until_complete(auth(phone_number,code=code,password=password))
     user, client = asyncio.get_event_loop().run_until_complete(
         auth(phone_number=phone_number, userSessionString=userSessionString)
     )
     asyncio.get_event_loop().run_until_complete(main(user, client))
+    print(user)
 
 
 init("+201554563496")
