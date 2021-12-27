@@ -6,10 +6,10 @@ Short name: jobsdashboard2021
 
 """
 
+# import nest_asyncio
 import asyncio
-import nest_asyncio
 
-nest_asyncio.apply()
+# nest_asyncio.apply()
 
 
 from telethon import TelegramClient
@@ -28,18 +28,17 @@ api_id = os.getenv("api_id")
 api_hash = os.getenv("api_hash")
 phone_number = os.getenv("phone_number")
 
-userSessionString = "1BJWap1wBuxP5Bw8EEUoMxgJoYsJLeUKCsQtOWoq9EazeWjBJluEsM2r3itAB5NRnQE_4viYrIla_VYBvXPO2f41MkIC7Fv058IuR4cVlNCfQWL3dliVwVC3TPNtkupcl1obFzPk6qoydi65SphdDMfWwZ1Sm5wUtfX5_WvusrMua3TIOJ7EL92lCiMWre_oqeQyn4Q1-tGrRsZn6vonUP4AjNnq_6xFJtWkHpzSzr6JoH2DuLCUbh6HUta6gZJZ1USfpuk-BDRibxIfBH3pS91txDvH5PNiWKkt_-Bcbt7VLr5fyzF2SyFe0gtCLgdGTX9au4P-es6Dj2w3HW5zestoCBVTlzks="
-
 
 async def auth(
     phone_number: str,
-    userSessionString: str or None = None,
+    user_session_string: str or None = None,
     code: str or None = None,
     password: str or None = None,
 ):
 
     user: User or SentCode
-    client = TelegramClient(StringSession(userSessionString), api_id, api_hash)
+    print(user_session_string)
+    client = TelegramClient(StringSession(user_session_string), api_id, api_hash)
     await client.connect()
 
     if await client.is_user_authorized():
@@ -54,8 +53,8 @@ async def auth(
     except SessionPasswordNeededError:
         user = await client.sign_in(password=password or input("Enter password: "))
 
-    userSessionString = client.session.save()
-    print("User session string: " + userSessionString)
+    user_session_string = client.session.save()
+    print("User session string: " + user_session_string)
 
     return user, client
 
@@ -119,13 +118,22 @@ async def main(user: User or SentCode, client: TelegramClient):
 # with client:
 
 
-def init(phone_number: str, code: str or None = None, password: str or None = None):
+def init(
+    phone_number: str,
+    code: str or None = None,
+    password: str or None = None,
+    user_session_string: str or None = None,
+):
+    print(user_session_string)
     # user, client = asyncio.get_event_loop().run_until_complete(auth(phone_number,code=code,password=password))
     user, client = asyncio.get_event_loop().run_until_complete(
-        auth(phone_number=phone_number, userSessionString=userSessionString)
+        auth(
+            phone_number=phone_number,
+            user_session_string=user_session_string,
+            password=password,
+            code=code,
+        )
     )
     asyncio.get_event_loop().run_until_complete(main(user, client))
-    print(user)
-
-
-init("+201554563496")
+    # print(user)
+    return user.stringify()
