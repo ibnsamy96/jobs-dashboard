@@ -1,4 +1,18 @@
 import requests as rq
+from bs4 import BeautifulSoup
+
+
+def getStringFromHTML(html_code):
+    soup = BeautifulSoup(html_code, "html.parser")
+    return soup.text
+
+
+def extractJobDescriptionText(job: dict):
+    if "description" in job.keys():
+        job["description"] = getStringFromHTML(job["description"])
+    if "company" in job.keys() and "description" in job["company"].keys():
+        job["company"]["description"] = getStringFromHTML(job["company"]["description"])
+    return job
 
 
 def generateSearchPageLink(query: str, offset: int):
@@ -28,6 +42,7 @@ def getAndConcatenateData(query: str):
     while offset < maximum_offset:
         fetchedData = fetchJobs(query=query, offset=offset)
         page_jobs = fetchedData["jobs"]
+        page_jobs = map(extractJobDescriptionText, page_jobs)
         all_jobs.extend(page_jobs)
 
         isLastPage: bool = findIsLastPage(fetchedData)
