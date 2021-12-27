@@ -32,6 +32,31 @@ def fetchJobs(query: str, offset: int):
     return json
 
 
+def createJobObject(workable_job: dict):
+    workable_job = extractJobDescriptionText(workable_job)
+
+    job_url = workable_job.get("applyUrl").split("/")[:-1]
+    job_url = "/".join(job_url)
+
+    print(workable_job["company"])
+
+    job = {
+        "title": workable_job.get("title"),
+        "description": workable_job.get("description"),
+        "href": job_url,
+        "location": {
+            "city": workable_job.get("location").get("city"),
+            "country": workable_job.get("location").get("countryName"),
+        },
+        "company": {
+            "name": workable_job.get("company").get("title"),
+            "logo": workable_job.get("company").get("image"),
+            "url": workable_job.get("company").get("website"),
+        },
+    }
+    return job
+
+
 def getAndConcatenateData(query: str):
     all_jobs = []
     jobs_count = 0
@@ -42,7 +67,7 @@ def getAndConcatenateData(query: str):
     while offset < maximum_offset:
         fetchedData = fetchJobs(query=query, offset=offset)
         page_jobs = fetchedData["jobs"]
-        page_jobs = map(extractJobDescriptionText, page_jobs)
+        page_jobs = map(createJobObject, page_jobs)
         all_jobs.extend(page_jobs)
 
         isLastPage: bool = findIsLastPage(fetchedData)
