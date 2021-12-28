@@ -1,0 +1,4 @@
+fastapi==0.68.1
+beautifulsoup4==4.10.0
+nest_asyncio==1.5.4
+requests_futures
