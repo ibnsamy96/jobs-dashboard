@@ -1,6 +1,5 @@
 import nest_asyncio
 
-# from requests_html import AsyncHTMLSession
 import requests
 from bs4 import BeautifulSoup
 
@@ -19,16 +18,8 @@ def findIsLastPage(jobs_array):
 
 
 async def fetchPageSoup(url: str):
-    # print("wuzzuf_fetchPageSoup")
     request = requests.get(url)
     soup = BeautifulSoup(request.text, "html.parser")
-    # async_session = AsyncHTMLSession()
-    # request = await async_session.get(generateSearchPageLink(page_num, query))
-    # await request.html.arender(timeout=20)
-    # body = request.html.find("body")[0]
-    # soup = BeautifulSoup(body.html, "html.parser")
-    # print("wuzzuf_finished_BeautifulSoup")
-
     return soup
 
 
@@ -121,7 +112,6 @@ def parseCompanyWebsite(job_div):
 
 async def fetchAndParsePageJobs(page_num: int, query: str):
     # print("wuzzuf_fetchAndParsePageJobs")
-    page_componies_websites = []
     page_jobs = []
     page_link = generateSearchPageLink(page_num, query)
     soup = await fetchPageSoup(url=page_link)
@@ -136,10 +126,6 @@ async def fetchAndParsePageJobs(page_num: int, query: str):
         company_title = parseCompanyTitle(job_div)
         company_website = parseCompanyWebsite(job_div)
 
-        page_componies_websites.append(
-            {"company_website": company_website, "company_title": company_title}
-        )
-
         job_info = createJobObject(
             title=title,
             href=href,
@@ -152,12 +138,10 @@ async def fetchAndParsePageJobs(page_num: int, query: str):
 
         page_jobs.append(job_info)
 
-    return page_jobs, page_componies_websites
+    return page_jobs
 
 
 async def getAndConcatenateData(query: str):
-    # print("wuzzuf_getAndConcatenateData")
-    all_componies_websites = []
 
     all_jobs = []
     page_num = 0
@@ -165,9 +149,7 @@ async def getAndConcatenateData(query: str):
     jobs_count = 0
 
     while page_num < maximumNumOfPages:
-        page_jobs, page_componies_websites = await fetchAndParsePageJobs(
-            page_num, query
-        )
+        page_jobs = await fetchAndParsePageJobs(page_num, query)
 
         isLastPage: bool = findIsLastPage(page_jobs)
 
@@ -176,12 +158,9 @@ async def getAndConcatenateData(query: str):
 
         jobs_count += len(page_jobs)
         all_jobs.extend(page_jobs)
-        all_componies_websites.extend(page_componies_websites)
 
         page_num += 1
 
-    # print(all_componies_websites)
-    # test.listToContent(all_componies_websites)
     return jobs_count, all_jobs
 
 
