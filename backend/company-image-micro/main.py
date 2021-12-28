@@ -19,6 +19,7 @@ class Company(BaseModel):
     company_title: str
     company_website: str
     company_image: str = None
+    page_type: str = None
 
 
 @app.get("/")
