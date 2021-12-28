@@ -18,16 +18,16 @@ def findIsLastPage(jobs_array):
     return False
 
 
-async def fetchPageSoup(page_num: int, query: str):
-    print("wuzzuf_fetchPageSoup")
-    request = requests.get(generateSearchPageLink(page_num, query))
+async def fetchPageSoup(url: str):
+    # print("wuzzuf_fetchPageSoup")
+    request = requests.get(url)
     soup = BeautifulSoup(request.text, "html.parser")
     # async_session = AsyncHTMLSession()
     # request = await async_session.get(generateSearchPageLink(page_num, query))
     # await request.html.arender(timeout=20)
     # body = request.html.find("body")[0]
     # soup = BeautifulSoup(body.html, "html.parser")
-    print("wuzzuf_finished_BeautifulSoup")
+    # print("wuzzuf_finished_BeautifulSoup")
 
     return soup
 
@@ -110,10 +110,6 @@ def parseCompanyTitle(job_div):
     )
 
 
-def parseCompanyImage(job_div):
-    return job_div.find("a").find("img").get("src")
-
-
 def parseCompanyWebsite(job_div):
     return (
         job_div.find("div", {"class": "css-laomuu"})
@@ -124,26 +120,25 @@ def parseCompanyWebsite(job_div):
 
 
 async def fetchAndParsePageJobs(page_num: int, query: str):
-    print("wuzzuf_fetchAndParsePageJobs")
-
+    # print("wuzzuf_fetchAndParsePageJobs")
+    page_componies_websites = []
     page_jobs = []
-    soup = await fetchPageSoup(page_num, query)
+    page_link = generateSearchPageLink(page_num, query)
+    soup = await fetchPageSoup(url=page_link)
     job_divs = soup.find_all("div", {"class": "css-pkv5jc"})
     for job_div in job_divs:
         title = parseJobTitle(job_div)
-        print(title)
         description = parseJobDescription(job_div)
-        print(description)
-
         href = parseJobHRef(job_div)
-        print(href)
 
         location_city, location_country = parseLocationCityAndCountry(job_div)
-        print(location_city)
 
         company_title = parseCompanyTitle(job_div)
-        # company_image = parseCompanyImage(job_div)
         company_website = parseCompanyWebsite(job_div)
+
+        page_componies_websites.append(
+            {"company_website": company_website, "company_title": company_title}
+        )
 
         job_info = createJobObject(
             title=title,
@@ -154,13 +149,15 @@ async def fetchAndParsePageJobs(page_num: int, query: str):
             location_city=location_city,
             location_country=location_country,
         )
+
         page_jobs.append(job_info)
 
-    return page_jobs
+    return page_jobs, page_componies_websites
 
 
 async def getAndConcatenateData(query: str):
-    print("wuzzuf_getAndConcatenateData")
+    # print("wuzzuf_getAndConcatenateData")
+    all_componies_websites = []
 
     all_jobs = []
     page_num = 0
@@ -168,7 +165,10 @@ async def getAndConcatenateData(query: str):
     jobs_count = 0
 
     while page_num < maximumNumOfPages:
-        page_jobs = await fetchAndParsePageJobs(page_num, query)
+        page_jobs, page_componies_websites = await fetchAndParsePageJobs(
+            page_num, query
+        )
+
         isLastPage: bool = findIsLastPage(page_jobs)
 
         if isLastPage:
@@ -176,14 +176,17 @@ async def getAndConcatenateData(query: str):
 
         jobs_count += len(page_jobs)
         all_jobs.extend(page_jobs)
+        all_componies_websites.extend(page_componies_websites)
 
         page_num += 1
 
+    # print(all_componies_websites)
+    # test.listToContent(all_componies_websites)
     return jobs_count, all_jobs
 
 
 async def getJobs(query: str):
-    print("wuzzuf_getJobs")
+    # print("wuzzuf_getJobs")
     jobs_count, all_jobs = await getAndConcatenateData(query)
     jobs_object = {"type": "wuzzuf", "count": jobs_count, "results": all_jobs}
     return jobs_object
