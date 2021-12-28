@@ -1,5 +1,8 @@
-import requests as rq
+import nest_asyncio
+from requests_html import AsyncHTMLSession
 from bs4 import BeautifulSoup
+
+nest_asyncio.apply()
 
 
 def generateSearchPageLink(page_num: int, query: str):
@@ -13,19 +16,26 @@ def findIsLastPage(jobs_array):
     return False
 
 
-def fetchPageSoup(page_num: int, query: str):
-    get_url = rq.get(generateSearchPageLink(page_num, query))
-    get_text = get_url.text
-    soup = BeautifulSoup(get_text, "html.parser")
+async def fetchPageSoup(page_num: int, query: str):
+    async_session = AsyncHTMLSession()
+    request = await async_session.get(generateSearchPageLink(page_num, query))
+    await request.html.arender(timeout=20)
+    body = request.html.find("body")[0]
+    soup = BeautifulSoup(body.html, "html.parser")
     return soup
 
 
-def fetchAndParsePageJobs(page_num: int, query: str):
+
+async def fetchAndParsePageJobs(page_num: int, query: str):
     page_jobs = []
-    soup = fetchPageSoup(page_num, query)
-    h2 = soup.find_all("h2", {"class": "css-m604qf"})
-    for h2Element in h2:
-        aElement = h2Element.find("a")
+    soup = await fetchPageSoup(page_num, query)
+    job_elements = soup.find_all("img", {"class": "css-17095x3"})
+    h2_elements = soup.find_all("h2", {"class": "css-m604qf"})
+    for h2_element in h2_elements:
+        print(job_elements)
+        # imgElement = job_element.get("a").get("img")
+        # print(imgElement.get("src"))
+        aElement = h2_element.find("a")
         exact_job_href = f'https://wuzzuf.net{aElement.get("href")}'.split("?")[0]
         job_info = {
             "title": aElement.string,
@@ -36,14 +46,14 @@ def fetchAndParsePageJobs(page_num: int, query: str):
     return page_jobs
 
 
-def getAndConcatenateData(query: str):
+async def getAndConcatenateData(query: str):
     all_jobs = []
     page_num = 0
     maximumNumOfPages = 10  # maximum number of pages to search in
     jobs_count = 0
 
     while page_num < maximumNumOfPages:
-        page_jobs = fetchAndParsePageJobs(page_num, query)
+        page_jobs = await fetchAndParsePageJobs(page_num, query)
         isLastPage: bool = findIsLastPage(page_jobs)
 
         if isLastPage:
@@ -57,7 +67,7 @@ def getAndConcatenateData(query: str):
     return jobs_count, all_jobs
 
 
-def getJobs(query: str):
-    jobs_count, all_jobs = getAndConcatenateData(query)
+async def getJobs(query: str):
+    jobs_count, all_jobs = await getAndConcatenateData(query)
     jobs_object = {"type": "wuzzuf", "count": jobs_count, "results": all_jobs}
     return jobs_object

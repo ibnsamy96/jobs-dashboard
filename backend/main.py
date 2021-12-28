@@ -29,8 +29,8 @@ def fetchAll(query: str):
 
 
 @app.get("/wuzzuf")
-def fetchWuzzuf(query: str):
-    wuzzuf_jobs = wuzzufJ.getJobs(query)
+async def fetchWuzzuf(query: str):
+    wuzzuf_jobs = await wuzzufJ.getJobs(query)
     return wuzzuf_jobs
 
 
