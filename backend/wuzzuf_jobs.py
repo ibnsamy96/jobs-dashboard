@@ -1,5 +1,7 @@
 import nest_asyncio
-from requests_html import AsyncHTMLSession
+
+# from requests_html import AsyncHTMLSession
+import requests
 from bs4 import BeautifulSoup
 
 nest_asyncio.apply()
@@ -17,11 +19,16 @@ def findIsLastPage(jobs_array):
 
 
 async def fetchPageSoup(page_num: int, query: str):
-    async_session = AsyncHTMLSession()
-    request = await async_session.get(generateSearchPageLink(page_num, query))
-    await request.html.arender(timeout=20)
-    body = request.html.find("body")[0]
-    soup = BeautifulSoup(body.html, "html.parser")
+    print("wuzzuf_fetchPageSoup")
+    request = requests.get(generateSearchPageLink(page_num, query))
+    soup = BeautifulSoup(request.text, "html.parser")
+    # async_session = AsyncHTMLSession()
+    # request = await async_session.get(generateSearchPageLink(page_num, query))
+    # await request.html.arender(timeout=20)
+    # body = request.html.find("body")[0]
+    # soup = BeautifulSoup(body.html, "html.parser")
+    print("wuzzuf_finished_BeautifulSoup")
+
     return soup
 
 
@@ -117,23 +124,29 @@ def parseCompanyWebsite(job_div):
 
 
 async def fetchAndParsePageJobs(page_num: int, query: str):
+    print("wuzzuf_fetchAndParsePageJobs")
+
     page_jobs = []
     soup = await fetchPageSoup(page_num, query)
     job_divs = soup.find_all("div", {"class": "css-pkv5jc"})
     for job_div in job_divs:
         title = parseJobTitle(job_div)
+        print(title)
         description = parseJobDescription(job_div)
+        print(description)
+
         href = parseJobHRef(job_div)
+        print(href)
 
         location_city, location_country = parseLocationCityAndCountry(job_div)
+        print(location_city)
 
         company_title = parseCompanyTitle(job_div)
-        company_image = parseCompanyImage(job_div)
+        # company_image = parseCompanyImage(job_div)
         company_website = parseCompanyWebsite(job_div)
 
         job_info = createJobObject(
             title=title,
-            company_image=company_image,
             href=href,
             description=description,
             company_website=company_website,
@@ -147,6 +160,8 @@ async def fetchAndParsePageJobs(page_num: int, query: str):
 
 
 async def getAndConcatenateData(query: str):
+    print("wuzzuf_getAndConcatenateData")
+
     all_jobs = []
     page_num = 0
     maximumNumOfPages = 10  # maximum number of pages to search in
@@ -168,6 +183,7 @@ async def getAndConcatenateData(query: str):
 
 
 async def getJobs(query: str):
+    print("wuzzuf_getJobs")
     jobs_count, all_jobs = await getAndConcatenateData(query)
     jobs_object = {"type": "wuzzuf", "count": jobs_count, "results": all_jobs}
     return jobs_object
