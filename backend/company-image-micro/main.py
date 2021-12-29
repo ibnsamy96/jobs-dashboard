@@ -27,7 +27,7 @@ def home():
     return {"message": "Welcome home, son!"}
 
 
-@app.get("/get-companies-logos")
+@app.post("/get-companies-logos")
 def getLogos(componies_websites: list[Company]):
     # print(componies_websites)
     companies_images = get_companies_images(componies_websites)
