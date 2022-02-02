@@ -17,9 +17,9 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {}
 
   searchForJobs(formValues: SearchFormValues): void {
-    const { query, type } = formValues;
+    const { query, type: endpoint } = formValues;
 
-    this.jobRetrieval.getJobs(type, query).subscribe((jobList) => {
+    this.jobRetrieval.getJobs(endpoint, query).subscribe((jobList) => {
       this.jobList = jobList;
     });
   }
