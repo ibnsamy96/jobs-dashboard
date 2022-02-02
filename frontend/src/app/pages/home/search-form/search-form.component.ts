@@ -1,8 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import {
-  SearchFormValues,
-  Endpoint,
-} from '../../../shared/types/general-types.interface';
+
+import { SearchFormValues } from './search-form.interface';
+import { Endpoint } from '../../../shared/types/general-types.interface';
 
 @Component({
   selector: 'app-search-form',

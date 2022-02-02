@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+
 import { Job } from 'src/app/shared/types/job.interface';
 import { JobRetrievalService } from '../../services/job-retrieval.service';
-import { SearchFormValues } from '../../shared/types/general-types.interface';
+import { SearchFormValues } from './search-form/search-form.interface';
 
 @Component({
   selector: 'app-home',
