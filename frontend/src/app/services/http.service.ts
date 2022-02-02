@@ -8,7 +8,7 @@ import { retry, catchError } from 'rxjs/operators';
 })
 export class HttpService {
   constructor(private httpClient: HttpClient) {}
-  get(url: string) {
-    this.httpClient.get(url).subscribe((data) => console.log(data));
+  get(url: string): Observable<unknown> {
+    return this.httpClient.get(url);
   }
 }

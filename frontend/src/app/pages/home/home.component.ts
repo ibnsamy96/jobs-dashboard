@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Job } from 'src/app/shared/types/job.interface';
 import { JobRetrievalService } from '../../services/job-retrieval.service';
 
 @Component({
@@ -7,9 +8,13 @@ import { JobRetrievalService } from '../../services/job-retrieval.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
+  jobList!: Job[];
+
   constructor(private jobRetrieval: JobRetrievalService) {}
 
   ngOnInit(): void {
-    this.jobRetrieval.getJob('workable', 'frontend');
+    this.jobRetrieval.getJobs('workable', 'frontend').subscribe((jobList) => {
+      this.jobList = jobList;
+    });
   }
 }

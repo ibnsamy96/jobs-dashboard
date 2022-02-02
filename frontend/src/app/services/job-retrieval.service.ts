@@ -1,4 +1,9 @@
 import { Injectable } from '@angular/core';
+import { Observable, pipe } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
+
+import { Job } from '../shared/types/job.interface';
+import { JobsResponse } from '../shared/types/jobs-response.interface';
 import { HttpService } from './http.service';
 
 type Endpoint = 'workable' | 'wuzzuf' | 'all';
@@ -11,7 +16,14 @@ export class JobRetrievalService {
 
   constructor(private httpService: HttpService) {}
 
-  getJob(endpoint: Endpoint, query: string): void {
-    this.httpService.get(`${this.url}/${endpoint}?query=${query}`);
+  getJobs(endpoint: Endpoint, query: string): Observable<Job[]> {
+    return this.httpService.get(`${this.url}/${endpoint}?query=${query}`).pipe(
+      tap(console.log),
+
+      map((response) => {
+        const { results: jobsList } = response as JobsResponse;
+        return jobsList;
+      })
+    );
   }
 }
