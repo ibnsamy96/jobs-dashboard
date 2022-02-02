@@ -1,1 +1,1 @@
-export type Endpoint = 'workable' | 'wuzzuf' | 'all';
+export type Endpoint = 'workable' | 'wuzzuf' | 'all-sources';
