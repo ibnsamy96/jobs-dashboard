@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
 import { JobComponent } from './shared/components/job/job.component';
 import { SearchFormComponent } from './pages/home/search-form/search-form.component';
+import { FirstCharSmallPipe } from './shared/components/job/first-char-small.pipe';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { SearchFormComponent } from './pages/home/search-form/search-form.compon
     HomeComponent,
     JobComponent,
     SearchFormComponent,
+    FirstCharSmallPipe,
   ],
   imports: [
     CommonModule,

@@ -1,1 +1,27 @@
-<p>job {{ job.title }} works!</p>
+<div>
+  <div>
+    <div>
+      <img
+        *ngIf="job.company.logo; else CompanyFirstCharacter"
+        [src]="job.company.logo"
+        [alt]="job.company.name"
+      />
+      <ng-template #CompanyFirstCharacter>{{
+        job.company.name | firstCharSmall
+      }}</ng-template>
+    </div>
+    <div>
+      <a [href]="job.company.url">
+        <p>{{ job.company.name }}</p></a
+      >
+      <a [href]="job.href">
+        <h1>{{ job.title }}</h1>
+      </a>
+      <p>
+        <span>{{ job.location.country }}</span> -
+        <span>{{ job.location.city }}</span>
+      </p>
+    </div>
+  </div>
+  <p>{{ job.description }}</p>
+</div>
