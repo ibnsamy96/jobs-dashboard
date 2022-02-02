@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Job } from 'src/app/shared/types/job.interface';
 import { JobRetrievalService } from '../../services/job-retrieval.service';
+import { SearchFormValues } from '../../shared/types/general-types.interface';
 
 @Component({
   selector: 'app-home',
@@ -12,8 +13,12 @@ export class HomeComponent implements OnInit {
 
   constructor(private jobRetrieval: JobRetrievalService) {}
 
-  ngOnInit(): void {
-    this.jobRetrieval.getJobs('workable', 'frontend').subscribe((jobList) => {
+  ngOnInit(): void {}
+
+  searchForJobs(formValues: SearchFormValues): void {
+    const { query, type } = formValues;
+
+    this.jobRetrieval.getJobs(type, query).subscribe((jobList) => {
       this.jobList = jobList;
     });
   }

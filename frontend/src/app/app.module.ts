@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -10,8 +11,19 @@ import { JobComponent } from './shared/components/job/job.component';
 import { SearchFormComponent } from './pages/home/search-form/search-form.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, JobComponent, SearchFormComponent],
-  imports: [CommonModule, BrowserModule, AppRoutingModule, HttpClientModule],
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    JobComponent,
+    SearchFormComponent,
+  ],
+  imports: [
+    CommonModule,
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

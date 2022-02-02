@@ -1,0 +1,7 @@
+<input type="text" placeholder="put your job here" #query />
+<select name="type" id="type" #type>
+  <option value="wuzzuf">Wuzzuf</option>
+  <option value="workable">Workable</option>
+  <option value="all-jobs">All Sources</option>
+</select>
+<button (click)="searchWithKeyword(query.value, type.value)">Search</button>

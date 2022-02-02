@@ -1,3 +1,4 @@
+<app-search-form (searchQueryAdded)="searchForJobs($event)"></app-search-form>
 
 <main>
   <app-job *ngFor="let job of jobList" [job]="job"></app-job>

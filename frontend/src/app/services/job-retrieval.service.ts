@@ -5,8 +5,7 @@ import { map, tap } from 'rxjs/operators';
 import { Job } from '../shared/types/job.interface';
 import { JobsResponse } from '../shared/types/jobs-response.interface';
 import { HttpService } from './http.service';
-
-type Endpoint = 'workable' | 'wuzzuf' | 'all';
+import { Endpoint } from '../shared/types/general-types.interface';
 
 @Injectable({
   providedIn: 'root',
