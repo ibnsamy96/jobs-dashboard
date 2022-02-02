@@ -38,7 +38,7 @@ def createJobObject(workable_job: dict):
     job_url = workable_job.get("applyUrl").split("/")[:-1]
     job_url = "/".join(job_url)
 
-    print(workable_job["company"])
+    # print(workable_job["company"])
 
     job = {
         "title": workable_job.get("title"),

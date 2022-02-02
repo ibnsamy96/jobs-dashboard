@@ -17,11 +17,11 @@ def home():
     return {"message": "Welcome home, son!"}
 
 
-@app.get("/all-jobs")
-def fetchAll(query: str):
+@app.get("/all-sources")
+async def fetchAll(query: str):
     all_jobs = []
     jobs_count = 0
-    wuzzuf_jobs = fetchWuzzuf(query)
+    wuzzuf_jobs = await fetchWuzzuf(query)
     all_jobs.append(wuzzuf_jobs)
     jobs_count += wuzzuf_jobs["count"]
     workable_jobs = fetchWorkable(query)
@@ -42,7 +42,11 @@ async def fetchWuzzuf(query: str):
 
 @app.get("/workable")
 def fetchWorkable(query: str):
+    print("workable_api")
+    start = time.time()
     workable_jobs = workableJ.getJobs(query)
+    end = time.time()
+    print(end - start)
     return workable_jobs
 
 
