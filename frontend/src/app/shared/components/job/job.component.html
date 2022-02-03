@@ -1,6 +1,6 @@
-<div>
-  <div>
-    <div>
+<div class="job-card">
+  <div class="header">
+    <div class="company-logo">
       <img
         *ngIf="job.company.logo; else CompanyFirstCharacter"
         [src]="job.company.logo"
@@ -10,18 +10,39 @@
         job.company.name | firstCharSmall
       }}</ng-template>
     </div>
-    <div>
+    <div class="job-title">
       <a [href]="job.company.url">
-        <p>{{ job.company.name }}</p></a
+        <p class="company-name">{{ job.company.name }}</p></a
       >
-      <a [href]="job.href">
-        <h1>{{ job.title }}</h1>
-      </a>
-      <p>
-        <span>{{ job.location.country }}</span> -
-        <span>{{ job.location.city }}</span>
+      <h1>{{ job.title }}</h1>
+      <p class="company-address">
+        <span>{{ job.location.city }}</span
+        >,
+        <span>{{ job.location.country }}</span>
       </p>
     </div>
+    <div class="job-controller">
+      <button>
+        <span>
+          <app-job-controller [controllerType]="'copy'"></app-job-controller>
+        </span>
+      </button>
+      <button>
+        <span>
+          <app-job-controller [controllerType]="'hide'"></app-job-controller>
+        </span>
+      </button>
+      <button>
+        <span>
+          <app-job-controller
+            [controllerType]="'bookmarked'"
+          ></app-job-controller>
+        </span>
+      </button>
+    </div>
   </div>
-  <p>{{ job.description }}</p>
+  <div class="body">
+    <p>{{ job.description }}</p>
+    <a [href]="job.href" class="apply-btn">Apply</a>
+  </div>
 </div>
