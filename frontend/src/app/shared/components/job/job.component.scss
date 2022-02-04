@@ -22,17 +22,17 @@
     align-items: center;
     justify-content: center;
 
-    width: 9rem;
+    max-width: 9rem;
+    min-width: 9rem;
     height: 9rem;
-    background-color: #f44336;
     border-radius: 1rem;
-    // margin-right: 2.2rem;
 
     font-family: "Marko One", serif;
     font-size: 5.7rem;
-    color: white;
+    color: rgb(244, 67, 54);
 
     overflow: hidden;
+    user-select: none;
 
     img {
       width: 100%;

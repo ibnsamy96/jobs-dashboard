@@ -2,7 +2,9 @@
   <div class="header">
     <div
       class="company-logo"
-      [ngStyle]="{ 'background-color': job.company.logo ? '#fff' : '#f44336' }"
+      [ngStyle]="{
+        border: job.company.logo ? 'none' : 'rgb(244, 67, 54) solid 2px'
+      }"
     >
       <img
         *ngIf="job.company.logo; else CompanyFirstCharacter"
@@ -52,6 +54,6 @@
           : job.description
       }}
     </p>
-    <a [href]="job.href" class="apply-btn">Apply</a>
+    <a target="_blank" [href]="job.href" class="apply-btn">Apply</a>
   </div>
 </div>
