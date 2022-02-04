@@ -1,38 +1,41 @@
 <div class="job-card">
   <div class="header">
-    <div class="company-logo">
+    <div
+      class="company-logo"
+      [ngStyle]="{ 'background-color': job.company.logo ? '#fff' : '#f44336' }"
+    >
       <img
         *ngIf="job.company.logo; else CompanyFirstCharacter"
         [src]="job.company.logo"
         [alt]="job.company.name"
       />
-      <ng-template #CompanyFirstCharacter>{{
-        job.company.name | firstCharSmall
-      }}</ng-template>
+      <ng-template #CompanyFirstCharacter>
+        <span> {{ job.company.name | firstCharSmall }} </span>
+      </ng-template>
     </div>
     <div class="job-title">
       <a [href]="job.company.url">
         <p class="company-name">{{ job.company.name }}</p></a
       >
-      <h1>{{ job.title }}</h1>
+      <h2>{{ job.title }}</h2>
       <p class="company-address">
         <span>{{ job.location.city }}</span
         >,
         <span>{{ job.location.country }}</span>
       </p>
     </div>
-    <div class="job-controller">
-      <button>
+    <div class="job-controllers">
+      <button (click)="controlJob('copy')">
         <span>
           <app-job-controller [controllerType]="'copy'"></app-job-controller>
         </span>
       </button>
-      <button>
+      <button (click)="controlJob('hide')">
         <span>
           <app-job-controller [controllerType]="'hide'"></app-job-controller>
         </span>
       </button>
-      <button>
+      <button (click)="controlJob('bookmarked')">
         <span>
           <app-job-controller
             [controllerType]="'bookmarked'"
@@ -42,7 +45,13 @@
     </div>
   </div>
   <div class="body">
-    <p>{{ job.description }}</p>
+    <p>
+      {{
+        job.description.length > 430
+          ? (job.description | slice: 0:430) + "..."
+          : job.description
+      }}
+    </p>
     <a [href]="job.href" class="apply-btn">Apply</a>
   </div>
 </div>

@@ -1,0 +1,96 @@
+.job-card {
+  background-color: #fff;
+  padding: 2rem;
+  box-shadow: 0 0 2rem rgba(0, 0, 0, 0.1);
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 2.2rem;
+  margin-bottom: 1.5rem;
+
+  .company-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 9rem;
+    height: 9rem;
+    background-color: #f44336;
+    border-radius: 1rem;
+    // margin-right: 2.2rem;
+
+    font-family: "Marko One", serif;
+    font-size: 5.7rem;
+    color: white;
+
+    overflow: hidden;
+
+    img {
+      width: 100%;
+    }
+  }
+
+  .job-title {
+    flex-grow: 2;
+
+    > a {
+      font-weight: bold;
+      color: #707070;
+      font-size: 1.5rem;
+      font-family: "Arial Rounded MT";
+    }
+
+    > h2 {
+      color: #2c2c2c;
+      font-size: 2.6rem;
+      font-weight: normal;
+      // font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+      // sans-serif;
+      font-family: Calibri;
+    }
+
+    > p {
+      color: #707070;
+      font-size: 1.2rem;
+      font-family: "Cascadia Mono";
+    }
+  }
+
+  .job-controllers {
+    width: 1.8rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    // margin-left: 2rem;
+    gap: 1.8rem;
+
+    > button {
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+    }
+  }
+}
+
+.body {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  font-family: Calibri;
+  font-size: 1.7rem;
+
+  > p {
+    color: #575757;
+  }
+  > a {
+    padding: 0.6rem 1.3rem;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 0.5rem;
+    margin-left: 2rem;
+  }
+}
