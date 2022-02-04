@@ -1,0 +1,12 @@
+main {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 4rem 0rem;
+
+  > * {
+    width: 31%;
+    min-height: 45rem;
+  }
+}
