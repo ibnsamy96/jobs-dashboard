@@ -2,6 +2,12 @@
   background-color: #fff;
   padding: 2rem;
   box-shadow: 0 0 2rem rgba(0, 0, 0, 0.1);
+  border-radius: 0.5rem;
+
+  display: flex;
+  flex-direction: column;
+
+  height: 100%;
 }
 
 .header {
@@ -79,7 +85,7 @@
 .body {
   display: flex;
   flex-direction: row;
-  align-items: flex-end;
+  flex-grow: 2;
   font-family: Calibri;
   font-size: 1.7rem;
 
@@ -92,5 +98,6 @@
     color: #fff;
     border-radius: 0.5rem;
     margin-left: 2rem;
+    align-self: flex-end;
   }
 }
