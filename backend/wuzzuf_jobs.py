@@ -142,6 +142,9 @@ async def fetchAndParsePageJobs(page_num: int, query: str):
 
 
 async def getAndConcatenateData(query: str):
+    import time
+
+    start = time.time()
 
     all_jobs = []
     page_num = 0
@@ -153,7 +156,11 @@ async def getAndConcatenateData(query: str):
 
         isLastPage: bool = findIsLastPage(page_jobs)
 
-        if isLastPage:
+        now: float = time.time()
+        elispated_time = now - start
+
+        if elispated_time > 8 or isLastPage:
+            print(elispated_time)
             break
 
         jobs_count += len(page_jobs)
