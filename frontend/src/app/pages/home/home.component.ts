@@ -11,15 +11,19 @@ import { SearchFormValues } from './search-form/search-form.interface';
 })
 export class HomeComponent implements OnInit {
   jobList!: Job[];
+  showLoading!: boolean;
 
   constructor(private jobRetrieval: JobRetrievalService) {}
 
   ngOnInit(): void {}
 
   searchForJobs(formValues: SearchFormValues): void {
+    this.showLoading = true;
+
     const { query, type: endpoint } = formValues;
 
     this.jobRetrieval.getJobs(endpoint, query).subscribe((jobList) => {
+      this.showLoading = false;
       this.jobList = jobList;
     });
   }
