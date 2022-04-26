@@ -12,22 +12,18 @@ import { environment } from '../../environments/environment';
   providedIn: 'root',
 })
 export class JobRetrievalService {
-  url = 'https://mahmoudsamy50q.korconnect.io/Jobs-Dashboard-API';
+  url = 'https://ky3irq.deta.dev';
 
   constructor(private httpService: HttpService) {}
 
   getJobs(endpoint: Endpoint, query: string): Observable<Job[]> {
-    return this.httpService
-      .get(`${this.url}/${endpoint}?query=${query}`, {
-        'x-api-key': environment.X_API_KEY,
-      })
-      .pipe(
-        tap(console.log),
+    return this.httpService.get(`${this.url}/${endpoint}?query=${query}`).pipe(
+      tap(console.log),
 
-        map((response) => {
-          const { results: jobsList } = response as JobsResponse;
-          return jobsList;
-        })
-      );
+      map((response) => {
+        const { results: jobsList } = response as JobsResponse;
+        return jobsList;
+      })
+    );
   }
 }
