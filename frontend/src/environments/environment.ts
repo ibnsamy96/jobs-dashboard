@@ -4,7 +4,6 @@
 
 export const environment = {
   production: false,
-  X_API_KEY: 'hlbsnf12XR8ra9aRQayN566jzjUqCYUZ3GQPOqgO',
 };
 
 /*

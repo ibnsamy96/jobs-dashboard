@@ -6,7 +6,6 @@ import { Job } from '../shared/types/job.interface';
 import { JobsResponse } from '../shared/types/jobs-response.interface';
 import { HttpService } from './http.service';
 import { Endpoint } from '../shared/types/general-types.interface';
-import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
