@@ -1,0 +1,84 @@
+:host {
+  display: block;
+  width: 100%;
+  // background-color: red;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+
+form {
+  font-size: 24px;
+  width: 700px;
+  max-width: 90%;
+  font-family: "Calibri";
+
+  * {
+    border: 3px #c1d8e0 solid;
+    border-radius: 5px;
+    outline: none;
+  }
+
+  input,
+  select {
+    // border: 3px #c1d8e0 solid;
+
+    &:focus-visible,
+    &:focus {
+      border-color: #0e7ca2;
+    }
+  }
+
+  input {
+    display: block;
+    padding: 10px;
+    width: 100%;
+    border-bottom-left-radius: 0;
+    // border-bottom-left-radius: 0;
+  }
+  select {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+
+    // border-top: none;
+    padding: 5px;
+    line-height: inherit;
+
+    option {
+      // background-color: red;
+    }
+  }
+
+  button {
+    background-color: #c1d8e0;
+    color: white;
+    outline: none;
+    padding: 5px 10px;
+
+    border-width: 5px;
+    // margin-left: 1rem;
+    cursor: pointer;
+
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 0;
+
+    // border-top: none;
+    border-left: none;
+
+    &:hover {
+      background-color: #7bbbd1;
+      border-color: #7bbbd1;
+    }
+
+    &:active,
+    &:focus-visible,
+    &:focus {
+      background-color: #0e7ca2;
+      border-color: #0e7ca2;
+    }
+  }
+}

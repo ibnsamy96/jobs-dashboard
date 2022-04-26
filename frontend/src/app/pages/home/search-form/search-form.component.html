@@ -1,7 +1,18 @@
-<input type="text" placeholder="put your job here" #query />
-<select name="type" id="type" #type>
-  <option value="wuzzuf">Wuzzuf</option>
-  <option value="workable">Workable</option>
-  <option disabled value="all-sources">All Sources</option>
-</select>
-<button (click)="searchWithKeyword(query.value, type.value)">Search</button>
+<form (ngSubmit)="searchWithKeyword(query.value, type.value)">
+  <input
+    type="text"
+    required
+    autofocus
+    inputmode="text"
+    placeholder="Search jobs using wuzzuf, workable ..."
+    name="query"
+    id="query"
+    #query
+  />
+  <select title="type" name="type" id="type" #type>
+    <option value="wuzzuf">Wuzzuf</option>
+    <option value="workable">Workable</option>
+    <option disabled value="all-sources">All Sources</option>
+  </select>
+  <button type="submit">Search</button>
+</form>
