@@ -10,8 +10,10 @@ import { SearchFormValues } from './search-form/search-form.interface';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  jobList!: Job[];
+  jobList: Job[] | [] = [];
   showLoading!: boolean;
+  showError!: boolean;
+  didSearch = false;
 
   constructor(private jobRetrieval: JobRetrievalService) {}
 
@@ -22,9 +24,18 @@ export class HomeComponent implements OnInit {
 
     const { query, type: endpoint } = formValues;
 
-    this.jobRetrieval.getJobs(endpoint, query).subscribe((jobList) => {
-      this.showLoading = false;
-      this.jobList = jobList;
-    });
+    this.jobRetrieval.getJobs(endpoint, query).subscribe(
+      (jobList) => {
+        this.didSearch = true;
+        this.showLoading = false;
+        this.jobList = jobList;
+      },
+      (error) => {
+        this.didSearch = true;
+        this.showLoading = false;
+        this.showError = true;
+        console.error(error);
+      }
+    );
   }
 }

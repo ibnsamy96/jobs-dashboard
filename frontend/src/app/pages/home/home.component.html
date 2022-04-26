@@ -3,7 +3,18 @@
 <main [style.alignItems]="showLoading ? 'center' : ''">
   <div [style.display]="showLoading ? 'block' : 'none'" class="loader"></div>
 
-  <div *ngIf="!showLoading" id="jobs">
+  <p class="error-message" *ngIf="!showLoading && showError">
+    Error happened, please try again later.
+  </p>
+
+  <p
+    class="error-message"
+    *ngIf="!showLoading && !showError && jobList.length === 0 && didSearch"
+  >
+    No result found.
+  </p>
+
+  <div *ngIf="!showLoading && !showError && [jobList.length > 0]" id="jobs">
     <app-job *ngFor="let job of jobList" [job]="job"></app-job>
   </div>
 </main>
