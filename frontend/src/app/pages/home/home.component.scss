@@ -15,6 +15,11 @@ main {
   flex-grow: 2;
   /* align-items: center;*/
 
+  max-width: 1450px;
+  margin: auto;
+
+  padding-bottom: 2rem;
+
   #jobs {
     display: flex;
     flex-direction: row;
@@ -50,5 +55,33 @@ main {
   .error-message {
     font-size: 16px;
     font-family: "Courier New", Courier, monospace;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  main {
+    #jobs > * {
+      width: 46%;
+      // TODO fix that by using text trim with css
+      // min-height: 45rem;
+    }
+  }
+}
+
+@media screen and (max-width: 750px) {
+  main {
+    $pad: 1rem;
+    padding-right: $pad;
+    padding-left: $pad;
+
+    #jobs {
+      gap: 1.5rem 0rem;
+    }
+
+    #jobs > * {
+      width: 90%;
+      // TODO fix that by using text trim with css
+      min-height: auto;
+    }
   }
 }
