@@ -8,4 +8,4 @@ python-dotenv==0.19.2
 # requests_html==0.10.0
 nest_asyncio==1.5.4
 requests_futures
-gunicorn
+uvicorn[standard]
