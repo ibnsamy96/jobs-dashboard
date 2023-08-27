@@ -4,4 +4,4 @@ Used Sources:
 
 - wuzzuf
 - workable
-- Telegram Groups
+- Telegram Groups (soon)
