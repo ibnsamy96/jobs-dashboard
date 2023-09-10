@@ -1,0 +1,9 @@
+v: 0
+app_name: "My App"
+micros:
+  - name: api
+    src: .
+    engine: python3.9
+    dev: uvicorn main:app
+    primary: true
+    public: true
