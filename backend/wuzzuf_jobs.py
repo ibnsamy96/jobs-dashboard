@@ -1,4 +1,5 @@
 import nest_asyncio
+import asyncio
 
 import requests
 from bs4 import BeautifulSoup
@@ -114,6 +115,7 @@ async def fetchAndParsePageJobs(page_num: int, query: str):
     # print("wuzzuf_fetchAndParsePageJobs")
     page_jobs = []
     page_link = generateSearchPageLink(page_num, query)
+    print(page_link)
     soup = await fetchPageSoup(url=page_link)
     job_divs = soup.find_all("div", {"class": "css-pkv5jc"})
     for job_div in job_divs:
@@ -172,7 +174,11 @@ async def getAndConcatenateData(query: str):
 
 
 async def getJobs(query: str):
-    # print("wuzzuf_getJobs")
+    print("wuzzuf_getJobs")
     jobs_count, all_jobs = await getAndConcatenateData(query)
     jobs_object = {"type": "wuzzuf", "count": jobs_count, "results": all_jobs}
+    print(jobs_object)
     return jobs_object
+
+
+# asyncio.run(getJobs('frontend'))
