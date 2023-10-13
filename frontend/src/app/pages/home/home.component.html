@@ -2,6 +2,9 @@
 
 <main [style.alignItems]="showLoading ? 'center' : ''">
   <div [style.display]="showLoading ? 'block' : 'none'" class="loader"></div>
+  <p [style.display]="showLoading ? 'block' : 'none'">
+    The backend is deployed using a free account, which makes the service sleep sometimes. Please wait for a while till the request is processed.
+  </p>
 
   <p class="error-message" *ngIf="!showLoading && showError">
     Error happened, please try again later.
